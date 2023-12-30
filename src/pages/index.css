@@ -1,0 +1,193 @@
+/* Create Account And Sign In CSS Starts Here */
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0 auto;
+  }
+  .headingContainer{
+    text-align: start;
+    width: 100%;
+  }
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+  }
+  .form-heading {
+    font-size: 24px; 
+    font-weight: bold;
+    margin-bottom: 10px;
+    line-height: 30px;
+  }
+  
+  .form-title {
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+  
+  .form-label {
+    font-size: 20px; 
+  }
+  .form-field {
+    width: 100%;
+    margin: 20px 0 !important;
+  }
+  
+  .form-buttons {
+    background-color: #4B56E3 !important;
+    color: white !important;
+    width: 335px !important;
+    height: 56px !important;
+    font-size: 18px !important;
+    margin: 20px 0px !important;
+    text-transform: capitalize !important;
+  }
+  
+  .or-divider {
+    margin: 20px 0;
+  }
+  
+  .social-icons {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0px 5px 0px;
+  }
+
+  /* DashBoard CSS Starts Here  */
+.outer-container{
+    width: 95%;
+    margin: 0 auto;
+    padding-bottom: 60px;
+}
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  .welcomeUser{
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+  }
+  .user-icon {
+    margin-right: 10px;
+    font-size: 24px;
+  }
+  
+  .welcome-message {
+    font-size: 18px;
+  }
+  
+  .bell-icon {
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .analytics-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .analytics-box {
+    background-color: #4B56E3;
+    border: 1px solid #ccc;
+    color: white;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin: 10px 5px;
+  }
+  .iconsContainer {
+    border: 1px solid white;
+    background-color: white;
+    padding: 10px;
+    border-radius: 50%;
+    margin-right: 30px;
+  }
+  .transaction-list li {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .transaction-header,
+  .transaction-details {
+    width: 100%;
+  }
+  
+  .transaction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .transaction-name {
+    font-weight: bold;
+font-size: 18px;
+font-weight: 500;
+line-height: 20px;
+letter-spacing: 0em;
+text-align: left;
+
+  }
+  .transaction-amount{
+font-size: 18px;
+font-weight: 700;
+line-height: 20px;
+letter-spacing: 0em;
+text-align: right;
+
+  }
+  
+  .transaction-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .transaction-date {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .transaction-status {
+    text-transform: capitalize;
+  }
+  .bottom-navigation{
+    display: flex !important;
+    justify-content: space-evenly !important;
+  }
+  .filter-dropdown{
+    text-align: end;
+  }
+  
+
+ /* Invoice CSS Starts Here   */
+
+ .Invoiceheading{
+    text-align: center;
+    font-size: 28px;
+    margin: 10px auto;
+    text-transform: uppercase;
+ }
