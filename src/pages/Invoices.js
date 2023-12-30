@@ -1,9 +1,4 @@
 import React, { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Icon1 from "../images/dashIcon1.png";
-import Icon2 from "../images/dashIcon2.png";
-import Icon3 from "../images/dashIcon3.png";
-import bellIcon from "../images/bellIcon.png";
 import Paper from '@mui/material/Paper';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';

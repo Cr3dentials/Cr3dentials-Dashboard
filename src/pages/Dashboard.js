@@ -18,13 +18,16 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
 
-const Dashboard = ({ userName }) => {
+const Dashboard = () => {
+
+  const [invoices, setInvoices] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('https://v4ae2rk43ktmsyuwohefx5wr6a0njgsw.lambda-url.us-east-1.on.aws');
         console.log('API Response:', response.data);
+        setInvoices(response.data.invoices);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -33,15 +36,12 @@ const Dashboard = ({ userName }) => {
     fetchData();
   }, []);
 
-  const transactions = [
-    { name: 'Christopher Barton', amount: 50, date: '2023-03-15', status: 'paid' },
-    { name: 'Christopher Barton', amount: 30, date: '2023-03-18', status: 'active' },
-    { name: 'Christopher Barton', amount: 20, date: '2023-03-22', status: 'unpaid' },
-    { name: 'Christopher Barton', amount: 60, date: '2023-03-25', status: 'active' },
-    { name: 'Christopher Barton', amount: 40, date: '2023-03-28', status: 'paidLate' },
-    { name: 'Christopher Barton', amount: 35, date: '2023-04-01', status: 'paidEarly' },
-  ];
-
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
+    const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
+    return formattedDate;
+  };
+  
   const [filterStatus, setFilterStatus] = useState('all');
   const [tabValue, setTabValue] = useState(0);
   const [bottomNavValue, setBottomNavValue] = useState('home');
@@ -58,61 +58,38 @@ const Dashboard = ({ userName }) => {
     setBottomNavValue(newValue);
   };
 
-  const filteredTransactions = transactions.filter(transaction => {
+  const filteredInvoices = invoices.filter(invoice => {
     if (filterStatus === 'all') return true;
     return (
-      transaction.status === filterStatus ||
-      (filterStatus === 'paid' && transaction.status === 'paidEarly') ||
-      (filterStatus === 'paid' && transaction.status === 'paidLate')
+      invoice.status === filterStatus ||
+      (filterStatus === 'paid' && invoice.status === 'paidEarly') ||
+      (filterStatus === 'paid' && invoice.status === 'paidLate')
     );
   });
 
-  const renderTransactions = (transactions) => {
+  const renderInvoices = (invoices) => {
     return (
       <ul>
-        {transactions.map((transaction, index) => (
-          <li key={index} className={`status-${transaction.status}`}>
+        {invoices.map((invoice, index) => (
+          <li key={index} className={`status-${invoice.status}`}>
             <div className="transaction-header">
-              <span className="transaction-name">{transaction.name}</span>
-              <span className="transaction-amount">${transaction.amount}</span>
+              <span className="transaction-name">{invoice.payer_address}</span>
+              <span className="transaction-name">
+              {invoice.payee_address}
+              </span>
+              <span className="transaction-amount">${invoice.amount}</span>
             </div>
             <div className="transaction-details">
-              <span className="transaction-date">{transaction.date}</span>
-              <span
-                className="transaction-status"
-                style={{
-                  color: getStatusColor(transaction.status),
-                  border: `1px solid ${getStatusColor(transaction.status)}`,
-                  borderRadius: '30px',
-                  backgroundColor: `${getStatusColor(transaction.status)}10`, // 
-                  padding: '0px 5px', // 
-                  display: 'inline-block',
-                }}
-              >
-                {transaction.status}
+            <span className="transaction-date">{formatDate(invoice.creation_date)}</span>
+              <span className="transaction-status">
+                Status: {invoice.status}
               </span>
+              <span className="transaction-fee">Fee: ${invoice.fee}</span>
             </div>
           </li>
         ))}
       </ul>
     );
-  };
-  
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'paid':
-        return '#20C375';
-      case 'active':
-        return '#1677FF';
-      case 'unpaid':
-        return '#C52CEE';
-      case 'paidEarly':
-        return '#FA8C16';
-      case 'paidLate':
-        return '#F5222D';
-      default:
-        return '#1677FF';
-    }
   };
 
   return (
@@ -181,10 +158,10 @@ const Dashboard = ({ userName }) => {
 
       <div className="transaction-list">
         <h2>Transaction List</h2>
-        {tabValue === 0 && renderTransactions(filteredTransactions)}
-        {tabValue === 1 && renderTransactions(transactions)}
+        {tabValue === 0 && renderInvoices(filteredInvoices)}
+        {tabValue === 1 && renderInvoices(invoices)}
       </div>
-    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
           <BottomNavigation
             value={bottomNavValue}
             onChange={handleBottomNavChange}
@@ -199,7 +176,6 @@ const Dashboard = ({ userName }) => {
           </BottomNavigation>
         </Paper>
     </div>
-    
   );
 };
 
