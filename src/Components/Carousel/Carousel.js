@@ -7,11 +7,8 @@ const Carousel = ({ slides }) => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      // Increment the current index to show the next slide
       setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
     }, 2000);
-
-    // Clear the interval when the component is unmounted or on cleanup
     return () => clearInterval(intervalId);
   }, [currentIndex, slides.length]);
 
@@ -49,7 +46,7 @@ const Carousel = ({ slides }) => {
       </div>
       <div className="carousel-buttons">
         <Link to="/create-account">
-          <button className="carousel-button primary">
+          <button className="carousel-button primary" onClick={() => console.log("Create Account")}>
             Create Account
           </button>
         </Link>

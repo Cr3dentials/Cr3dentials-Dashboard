@@ -1,18 +1,9 @@
 import React, { useState } from 'react';
-import Paper from '@mui/material/Paper';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import HomeIcon from '@mui/icons-material/Home';
-import ReceiptIcon from '@mui/icons-material/Receipt';
-import AssessmentIcon from '@mui/icons-material/Assessment';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import PersonIcon from '@mui/icons-material/Person';
-import { Link } from 'react-router-dom';
 import './index.css';
 
-const Dashboard = ({ userName }) => {
+const Invoices = () => {
   const transactions = [
     { name: 'Christopher Barton', amount: 50, date: '2023-03-15', status: 'paid' },
     { name: 'Christopher Barton', amount: 30, date: '2023-03-18', status: 'active' },
@@ -24,7 +15,6 @@ const Dashboard = ({ userName }) => {
 
   const [filterStatus, setFilterStatus] = useState('all');
   const [tabValue, setTabValue] = useState(0);
-  const [bottomNavValue, setBottomNavValue] = useState('invoices');
 
   const handleFilterChange = (event) => {
     setFilterStatus(event.target.value);
@@ -32,10 +22,6 @@ const Dashboard = ({ userName }) => {
 
   const handleChangeTab = (event, newValue) => {
     setTabValue(newValue);
-  };
-
-  const handleBottomNavChange = (event, newValue) => {
-    setBottomNavValue(newValue);
   };
 
   const filteredTransactions = transactions.filter(transaction => {
@@ -64,8 +50,8 @@ const Dashboard = ({ userName }) => {
                   color: getStatusColor(transaction.status),
                   border: `1px solid ${getStatusColor(transaction.status)}`,
                   borderRadius: '30px',
-                  backgroundColor: `${getStatusColor(transaction.status)}10`, // 
-                  padding: '0px 5px', // 
+                  backgroundColor: `${getStatusColor(transaction.status)}10`, 
+                  padding: '0px 5px', 
                   display: 'inline-block',
                 }}
               >
@@ -126,23 +112,9 @@ const Dashboard = ({ userName }) => {
         {tabValue === 0 && renderTransactions(filteredTransactions)}
         {tabValue === 1 && renderTransactions(transactions)}
       </div>
-    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-          <BottomNavigation
-            value={bottomNavValue}
-            onChange={handleBottomNavChange}
-            showLabels
-            className="bottom-navigation"
-          >
-            <BottomNavigationAction label="Home" value="home" icon={<HomeIcon />} component={Link} to="/dashboard" />
-            <BottomNavigationAction label="Invoices" value="invoices" icon={<ReceiptIcon />} component={Link} to="/invoices" />
-            <BottomNavigationAction label="Score" value="score" icon={<AssessmentIcon />} component={Link} to="/score" />
-            <BottomNavigationAction label="Wallet" value="wallet" icon={<AccountBalanceWalletIcon />} component={Link} to="/wallet" />
-            <BottomNavigationAction label="Profile" value="profile" icon={<PersonIcon />} component={Link} to="/profile" />
-          </BottomNavigation>
-        </Paper>
     </div>
     
   );
 };
 
-export default Dashboard;
+export default Invoices;

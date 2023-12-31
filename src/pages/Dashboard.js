@@ -4,29 +4,19 @@ import Icon1 from "../images/dashIcon1.png";
 import Icon2 from "../images/dashIcon2.png";
 import Icon3 from "../images/dashIcon3.png";
 import bellIcon from "../images/bellIcon.png";
-import Paper from '@mui/material/Paper';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import HomeIcon from '@mui/icons-material/Home';
-import ReceiptIcon from '@mui/icons-material/Receipt';
-import AssessmentIcon from '@mui/icons-material/Assessment';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import PersonIcon from '@mui/icons-material/Person';
-import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 import axios from 'axios';
 import './index.css';
 
-const Dashboard = () => {
-
+const Dashboard = ({ onSignOut }) => {
   const [invoices, setInvoices] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('https://v4ae2rk43ktmsyuwohefx5wr6a0njgsw.lambda-url.us-east-1.on.aws');
-        console.log('API Response:', response.data);
         setInvoices(response.data.invoices);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -44,7 +34,14 @@ const Dashboard = () => {
   
   const [filterStatus, setFilterStatus] = useState('all');
   const [tabValue, setTabValue] = useState(0);
-  const [bottomNavValue, setBottomNavValue] = useState('home');
+  const [signOut, setSignOut] = useState(false);
+
+  const handleSignOut = () => {
+    setSignOut(true);
+    if (onSignOut) {
+      onSignOut();
+    }
+  };
 
   const handleFilterChange = (event) => {
     setFilterStatus(event.target.value);
@@ -54,9 +51,6 @@ const Dashboard = () => {
     setTabValue(newValue);
   };
 
-  const handleBottomNavChange = (event, newValue) => {
-    setBottomNavValue(newValue);
-  };
 
   const filteredInvoices = invoices.filter(invoice => {
     if (filterStatus === 'all') return true;
@@ -99,10 +93,11 @@ const Dashboard = () => {
         <Avatar className="user-icon" alt="Ahmer" src="/static/images/avatar/1.jpg" />
          <div className="welcomeUser">
          <span className="welcome-message">Welcome !</span>
-         <span >Hey Ahmer  👋</span>
+         <span >Hey Ahmer 👋</span>
          </div>
         </div>
-        <img src={bellIcon} className="bell-icon" />
+        <Button variant="contained" onClick={handleSignOut}>Sign Out</Button>
+        {/* <img src={bellIcon} className="bell-icon" alt='notifications icon' /> */}
       </div>
 
       <Tabs
@@ -161,20 +156,6 @@ const Dashboard = () => {
         {tabValue === 0 && renderInvoices(filteredInvoices)}
         {tabValue === 1 && renderInvoices(invoices)}
       </div>
-      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-          <BottomNavigation
-            value={bottomNavValue}
-            onChange={handleBottomNavChange}
-            showLabels
-            className="bottom-navigation"
-          >
-            <BottomNavigationAction label="Home" value="home" icon={<HomeIcon />} component={Link} to="/dashboard" />
-            <BottomNavigationAction label="Invoices" value="invoices" icon={<ReceiptIcon />} component={Link} to="/invoices" />
-            <BottomNavigationAction label="Score" value="score" icon={<AssessmentIcon />} component={Link} to="/score" />
-            <BottomNavigationAction label="Wallet" value="wallet" icon={<AccountBalanceWalletIcon />} component={Link} to="/wallet" />
-            <BottomNavigationAction label="Profile" value="profile" icon={<PersonIcon />} component={Link} to="/profile" />
-          </BottomNavigation>
-        </Paper>
     </div>
   );
 };

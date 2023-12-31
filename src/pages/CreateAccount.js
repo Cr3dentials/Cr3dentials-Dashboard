@@ -1,5 +1,3 @@
-// CreateAccount.js
-
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -18,9 +16,17 @@ import AppleIcon from '@mui/icons-material/Apple';
 import { Link } from 'react-router-dom';
 import './index.css';
 
-const CreateAccount = () => {
+const CreateAccount = ({onSignIn}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [signIn, setSignIn] = useState(false);
+
+  const handleSignIn = () => {
+    setSignIn(true);
+    if (onSignIn) {
+      onSignIn();
+    }
+  };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
@@ -78,7 +84,7 @@ const CreateAccount = () => {
         </FormControl>
 
         <Link to="/dashboard">
-        <Button className="form-buttons">
+        <Button className="form-buttons" onClick={handleSignIn}>
           Sign Up
         </Button>
         </Link>

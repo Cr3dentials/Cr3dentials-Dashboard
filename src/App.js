@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import Carousel from './Components/Carousel/Carousel';
+import BottomNav from './Components/BottomNav'; 
 import Dashboard from './pages/Dashboard';
 import CreateAccount from './pages/CreateAccount';
 import Invoices from './pages/Invoices';
+import Payments from './pages/Payments';
 import SignIn from "./pages/SignIn";
 import slider1 from "./images/slider1.png";
 import slider2 from "./images/slider2.png";
 import slider3 from "./images/slider3.png";
+import CreateUser from './pages/CreateUser';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleSignIn = () => {
     setIsLoggedIn(true);
   };
 
   const handleSignOut = () => {
-    // Perform sign-out logic
     setIsLoggedIn(false);
   };
 
@@ -41,13 +43,13 @@ function App() {
 
   return (
     <Router>
+      {isLoggedIn && <BottomNav />}
       <Routes>
         <Route
           path="/"
           element={
             <Carousel
               slides={slides}
-              onSignIn={handleSignIn}
               isLoggedIn={isLoggedIn}
             />
           }
@@ -62,9 +64,11 @@ function App() {
             )
           }
         />
-         <Route path="/create-account" element={<CreateAccount/>} />
-         <Route path="/sign-in" element={<SignIn/>} />
+         <Route path="/create-account" element={<CreateAccount onSignIn={handleSignIn}/>} />
+         <Route path="/sign-in" element={<SignIn onSignIn={handleSignIn}/>} />
          <Route path="/invoices" element={<Invoices/>} />
+         <Route path="/payments" element={<Payments/>} />
+         <Route path="/create-user" element={<CreateUser/>} />
       </Routes>
     </Router>
   );
