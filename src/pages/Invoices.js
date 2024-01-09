@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 import './index.css';
 
 const Invoices = () => {
@@ -14,14 +14,9 @@ const Invoices = () => {
   ];
 
   const [filterStatus, setFilterStatus] = useState('all');
-  const [tabValue, setTabValue] = useState(0);
 
   const handleFilterChange = (event) => {
     setFilterStatus(event.target.value);
-  };
-
-  const handleChangeTab = (event, newValue) => {
-    setTabValue(newValue);
   };
 
   const filteredTransactions = transactions.filter(transaction => {
@@ -86,15 +81,11 @@ const Invoices = () => {
          <div className="Invoiceheading">
             <h2>Invoices</h2>
         </div>
-      <Tabs
-        value={tabValue}
-        onChange={handleChangeTab}
-        centered
-        className="tabs-container"
-      >
-        <Tab label="Get Paid" />
-        <Tab label="Pay Now" />
-      </Tabs>
+      <div className="tabs-container">
+        <Link to="/create-invoice" variant="contained" color="primary"><Button>Create Invoice</Button></Link>
+        <Link to="/delete-invoice" variant="contained" color="primary"><Button>Delete Invoice</Button></Link>
+        <Link to="/pay-invoice" variant="contained" color="primary"><Button>Pay Invoice</Button></Link>
+      </div>
 
       <div className="filter-dropdown">
         <select id="statusFilter" value={filterStatus} onChange={handleFilterChange}>
@@ -109,8 +100,8 @@ const Invoices = () => {
 
       <div className="transaction-list">
         <h2>Transaction List</h2>
-        {tabValue === 0 && renderTransactions(filteredTransactions)}
-        {tabValue === 1 && renderTransactions(transactions)}
+        {renderTransactions(filteredTransactions)}
+        {renderTransactions(transactions)}
       </div>
     </div>
     

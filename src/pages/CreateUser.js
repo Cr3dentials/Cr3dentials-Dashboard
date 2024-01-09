@@ -4,17 +4,19 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
 
-const roles = ['Admin', 'User', 'Guest'];
+const roles = [2, 1, 3];
 
 const CreateUser = () => {
   const [formData, setFormData] = useState({
+  body:{
     username: '',
     email: '',
     password: '',
     phone_number: '',
     role: '',
     created_date: getCurrentDate(),
-    authentication_token: "testingtoken"
+    authentication_token: ''
+  }
   });
 
   function getCurrentDate() {
@@ -27,20 +29,47 @@ const CreateUser = () => {
 
   const handleChange = (e) => {
     setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+      body: {
+        ...formData.body,
+        [e.target.name]: e.target.value,
+      },
     });
   };
 
-  const handleSubmit = async (e) => {
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     try {
+//       const response = await axios.post(
+//         'https://fpwpyyjfamwujijz56gogk3wam0yoqkh.lambda-url.us-east-1.on.aws/',
+//         formData,
+//         {
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     crossdomain : true,
+//   }
+//       );
+//       console.log('Response:', response.data);
+//     } catch (error) {
+//       console.error('Error submitting form data:', error);
+//     }
+//   };
+
+const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await axios.post('https://fpwpyyjfamwujijz56gogk3wam0yoqkh.lambda-url.us-east-1.on.aws/', {
-            body: {
-              ...formData,
-            },
+      const Response = await axios.request({
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://fpwpyyjfamwujijz56gogk3wam0yoqkh.lambda-url.us-east-1.on.aws/',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'http://localhost:3000', 
+          },
+        data: JSON.stringify(formData),
       });
-      console.log('Response:', response.data);
+
+      console.log('Response:', Response.data);
     } catch (error) {
       console.error('Error submitting form data:', error);
     }
@@ -87,6 +116,14 @@ const CreateUser = () => {
         required
       />
       <TextField
+        label="Auth Token"
+        name="authentication_token"
+        value={formData.authentication_token}
+        onChange={handleChange}
+        fullWidth
+        margin="normal"
+      />
+      <TextField
         select
         label="Role"
         name="role"
@@ -103,15 +140,15 @@ const CreateUser = () => {
         ))}
       </TextField>
       <TextField
-        label="Creation Date"
-        name="creationDate"
+        label="Created Date"
+        name="created_date"
         value={formData.created_date}
         fullWidth
         margin="normal"
         disabled
       />
       <Button type="submit" variant="contained" color="primary" fullWidth>
-        Create User
+        Add User
       </Button>
     </form>
   );

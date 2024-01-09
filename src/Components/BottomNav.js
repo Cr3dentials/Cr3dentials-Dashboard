@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 const BottomNav = () => {
   return (
-      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 999, }} elevation={3}>
       <BottomNavigation showLabels>
         <BottomNavigationAction label="Home" value="home" icon={<HomeIcon />} component={Link} to="/dashboard" />
         <BottomNavigationAction label="Invoices" value="invoices" icon={<ReceiptIcon />} component={Link} to="/invoices" />
@@ -19,7 +19,7 @@ const BottomNav = () => {
         <BottomNavigationAction label="Wallet" value="wallet" icon={<AccountBalanceWalletIcon />} component={Link} to="/wallet" />
         <BottomNavigationAction label="Payments" value="Payments" icon={<AccountBalanceWalletIcon />} component={Link} to="/payments" />
         <BottomNavigationAction label="Create User" value="create-user" icon={<AccountBalanceWalletIcon />} component={Link} to="/create-user" />
-        <BottomNavigationAction label="Profile" value="profile" icon={<PersonIcon />} component={Link} to="/profile" />
+        <BottomNavigationAction label="Get User" value="get-user" icon={<PersonIcon />} component={Link} to="/get-user" />
       </BottomNavigation>
     </Paper>
   );
