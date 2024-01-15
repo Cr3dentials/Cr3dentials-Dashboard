@@ -43,9 +43,8 @@ const UserInfo = () => {
   };
 
   useEffect(() => {
-    // Fetch all users data when the component mounts
     fetchAllUsersData();
-  }, []); // Empty dependency array ensures the effect runs once after the first render
+  }, []); 
 
   const renderUserData = (userData) => {
     return (

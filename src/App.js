@@ -14,6 +14,7 @@ import CreateUser from './pages/CreateUser';
 import GetUser from './pages/GetUser';
 import PayInvoice from "./pages/PayInvoice"
 import CreateInvoice from './Components/CreateInvoice/CreateInvoice';
+import EditInvoice from './pages/EditInvoice';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -74,6 +75,7 @@ function App() {
          <Route path="/create-user" element={<CreateUser/>} />
          <Route path="/pay-invoice" element={<PayInvoice/>} />
          <Route path="/create-invoice" element={<CreateInvoice/>} />
+         <Route path="/edit-invoice" element={<EditInvoice/>} />
          <Route path="/get-user" element={<GetUser/>} />
          {/* <Route path="/delete-invoice" element={<CreateInvoice/>} /> */}
       </Routes>

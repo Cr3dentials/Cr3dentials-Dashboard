@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import EditInvoice from './EditInvoice';
 import Icon1 from "../images/dashIcon1.png";
@@ -93,91 +94,100 @@ const Dashboard = ({ onSignOut }) => {
 
   return (
     <div className="outer-container">
-       <div className="top-row">
-        <div className="user-info">
-        <Avatar className="user-icon" alt="Ahmer" src="/static/images/avatar/1.jpg" />
-         <div className="welcomeUser">
-         <span className="welcome-message">Welcome !</span>
-         <span >Hey Ahmer 👋</span>
-         </div>
-        </div>
-        <Button variant="contained" onClick={handleSignOut}>Sign Out</Button>
-        {/* <img src={bellIcon} className="bell-icon" alt='notifications icon' /> */}
-      </div>
+    <div className="top-row">
+    <div className="user-info">
+    <Avatar className="user-icon" alt="Ahmer" src="/static/images/avatar/1.jpg" />
+     <div className="welcomeUser">
+     <span className="welcome-message">Welcome !</span>
+     <span >Hey Ahmer 👋</span>
+     </div>
+    </div>
+    <Button variant="contained" onClick={handleSignOut}>Sign Out</Button>
+    {/* <img src={bellIcon} className="bell-icon" alt='notifications icon' /> */}
+  </div>
 
-      <Tabs
-        value={tabValue}
-        onChange={handleChangeTab}
-        centered
-        className="tabs-container"
-      >
-        <Tab label="Get Paid" />
-        <Tab label="Pay Now" />
-      </Tabs>
+  <Tabs
+    value={tabValue}
+    onChange={handleChangeTab}
+    centered
+    className="tabs-container"
+  >
+    <Tab label="Get Paid" />
+    <Tab label="Pay Now" />
+  </Tabs>
 
-      <div className="analytics-row">
-        <div className="analytics-box">
-          <div className='iconsContainer'>
-            <img src={Icon1} alt='Invoice Icon' />
-          </div>
-          <div>
-            <p style={{ fontSize: '24px' }}>40</p>
-            <h3 style={{ fontSize: '18px' }}>Received Invoices</h3>
-          </div>
-        </div>
-        <div className="analytics-box">
-          <div className='iconsContainer'>
-            <img src={Icon2} alt='Invoice Icon' />
-          </div>
-          <div>
-            <p style={{ fontSize: '24px' }}>236</p>
-            <h3 style={{ fontSize: '18px' }}>Active Invoices</h3>
-          </div>
-        </div>
-        <div className="analytics-box">
-          <div className='iconsContainer'>
-            <img src={Icon3} alt='Invoice Icon' />
-          </div>
-          <div>
-            <p style={{ fontSize: '24px' }}>10</p>
-            <h3 style={{ fontSize: '18px' }}>Overdue Invoices</h3>
-          </div>
-        </div>
+  <div className="analytics-row">
+    <div className="analytics-box">
+      <div className='iconsContainer'>
+        <img src={Icon1} alt='Invoice Icon' />
       </div>
+      <div>
+        <p style={{ fontSize: '24px' }}>40</p>
+        <h3 style={{ fontSize: '18px' }}>Received Invoices</h3>
+      </div>
+    </div>
+    <div className="analytics-box">
+      <div className='iconsContainer'>
+        <img src={Icon2} alt='Invoice Icon' />
+      </div>
+      <div>
+        <p style={{ fontSize: '24px' }}>236</p>
+        <h3 style={{ fontSize: '18px' }}>Active Invoices</h3>
+      </div>
+    </div>
+    <div className="analytics-box">
+      <div className='iconsContainer'>
+        <img src={Icon3} alt='Invoice Icon' />
+      </div>
+      <div>
+        <p style={{ fontSize: '24px' }}>10</p>
+        <h3 style={{ fontSize: '18px' }}>Overdue Invoices</h3>
+      </div>
+    </div>
+  </div>
 
-      <div className="filter-dropdown">
-        <select id="statusFilter" value={filterStatus} onChange={handleFilterChange}>
-          <option value="all">All</option>
-          <option value="paid">Paid</option>
-          <option value="unpaid">Unpaid</option>
-          <option value="active">Active</option>
-          <option value="paidLate">Paid Late</option>
-          <option value="paidEarly">Paid Early</option>
-        </select>
-      </div>
+  <div className="filter-dropdown">
+    <select id="statusFilter" value={filterStatus} onChange={handleFilterChange}>
+      <option value="all">All</option>
+      <option value="paid">Paid</option>
+      <option value="unpaid">Unpaid</option>
+      <option value="active">Active</option>
+      <option value="paidLate">Paid Late</option>
+      <option value="paidEarly">Paid Early</option>
+    </select>
+  </div>
 
       <div className="transaction-list">
-  <h2>Transaction List</h2>
-  <ul>
-    {invoices.map((invoice, index) => (
-      <li key={index} className={`status-${invoice.status}`}>
-        <div className="transaction-header">
-          <span className="transaction-name">{invoice.payer_address}</span>
-          <span className="transaction-name">{invoice.payee_address}</span>
-          <span className="transaction-amount">${invoice.amount}</span>
-        </div>
-        <div className="transaction-details">
-          <span className="transaction-date">{formatDate(invoice.creation_date)}</span>
-          <span className="transaction-status">Status: {invoice.status}</span>
-          <span className="transaction-fee">Fee: ${invoice.fee}</span>
-        </div>
-        <div className="transaction-actions">
-          <Button onClick={() => handleEditClick(invoice)}>Edit</Button>
-        </div>
-      </li>
-    ))}
-  </ul>
-</div>
+        <h2>Transaction List</h2>
+        <ul>
+          {invoices.map((invoice, index) => (
+            <li key={index} className={`status-${invoice.status}`}>
+              <div className="transaction-header">
+                <span className="transaction-name">{invoice.payer_address}</span>
+                <span className="transaction-name">{invoice.payee_address}</span>
+                <span className="transaction-amount">${invoice.amount}</span>
+              </div>
+              <div className="transaction-details">
+                <span className="transaction-date">{formatDate(invoice.creation_date)}</span>
+                <span className="transaction-status">Status: {invoice.status}</span>
+                <span className="transaction-fee">Fee: ${invoice.fee}</span>
+              </div>
+              <div className="transaction-actions">
+                
+                <Link
+                  to={{
+                    pathname: '/edit-invoice',
+                    state: { invoiceDetails: invoice },
+                  }}
+                >
+                  <Button>Edit</Button>
+                </Link>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       {selectedInvoice && (
         <EditInvoice
           invoice={selectedInvoice}
