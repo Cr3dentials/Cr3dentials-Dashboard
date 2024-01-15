@@ -53,12 +53,11 @@ const CreateInvoice = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        'https://6cadrywjh5nvenuxyilhulz62a0enohj.lambda-url.us-east-1.on.aws/',
+        'https://t5epo0n12j.execute-api.us-east-1.amazonaws.com/Stage/invoices',
         { body: invoiceData },
         {
           headers: {
-            'Content-Type': 'application/json',
-            Authorization : "no Auth"
+            'Content-Type': 'application/json'
           },
         }
       );

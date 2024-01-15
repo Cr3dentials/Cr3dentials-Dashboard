@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import Alert from '@mui/material/Alert'; // Import Alert from Material-UI
 import axios from 'axios';
 
 const roles = [2, 1, 3];
 
 const CreateUser = () => {
   const [formData, setFormData] = useState({
-  body:{
     username: '',
     email: '',
     password: '',
     phone_number: '',
     role: '',
     created_date: getCurrentDate(),
-    authentication_token: ''
-  }
+    authentication_token: '',
   });
+  const [alert, setAlert] = useState({ open: false, message: '', severity: '' });
 
   function getCurrentDate() {
     const today = new Date();
@@ -29,54 +29,58 @@ const CreateUser = () => {
 
   const handleChange = (e) => {
     setFormData({
-      body: {
-        ...formData.body,
-        [e.target.name]: e.target.value,
-      },
+      ...formData,
+      [e.target.name]: e.target.value,
     });
   };
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const response = await axios.post(
-//         'https://fpwpyyjfamwujijz56gogk3wam0yoqkh.lambda-url.us-east-1.on.aws/',
-//         formData,
-//         {
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     crossdomain : true,
-//   }
-//       );
-//       console.log('Response:', response.data);
-//     } catch (error) {
-//       console.error('Error submitting form data:', error);
-//     }
-//   };
-
-const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const Response = await axios.request({
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: 'https://fpwpyyjfamwujijz56gogk3wam0yoqkh.lambda-url.us-east-1.on.aws/',
-        headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'http://localhost:3000', 
-          },
-        data: JSON.stringify(formData),
-      });
-
-      console.log('Response:', Response.data);
-    } catch (error) {
-      console.error('Error submitting form data:', error);
-    }
+  const handleAlertClose = () => {
+    setAlert({ ...alert, open: false });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        'https://t5epo0n12j.execute-api.us-east-1.amazonaws.com/Stage/user',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+  
+      setAlert({
+        open: true,
+        message: 'User has been successfully created!',
+        severity: 'success',
+      });
+  
+      // Clear form data
+      setFormData({
+        username: '',
+        email: '',
+        password: '',
+        phone_number: '',
+        role: '',
+        created_date: getCurrentDate(),
+        authentication_token: '',
+      });
+  
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('Error submitting form data:', error);
+      setAlert({
+        open: true,
+        message: 'Error creating user. Please try again.',
+        severity: 'error',
+      });
+    }
+  };
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: 'auto' }}>
+    <>
+      <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: 'auto' }}>
       <TextField
         label="Username"
         name="username"
@@ -139,18 +143,29 @@ const handleSubmit = async (e) => {
           </MenuItem>
         ))}
       </TextField>
-      <TextField
+      {/* <TextField
         label="Created Date"
         name="created_date"
         value={formData.created_date}
         fullWidth
         margin="normal"
         disabled
-      />
+      /> */}
       <Button type="submit" variant="contained" color="primary" fullWidth>
         Add User
       </Button>
-    </form>
+        
+      </form>
+
+      <Alert
+        open={alert.open}
+        onClose={handleAlertClose}
+        severity={alert.severity}
+        sx={{ marginTop: 2 }}
+      >
+        {alert.message}
+      </Alert>
+    </>
   );
 };
 

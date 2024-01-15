@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
+import EditInvoice from './EditInvoice';
 import Icon1 from "../images/dashIcon1.png";
 import Icon2 from "../images/dashIcon2.png";
 import Icon3 from "../images/dashIcon3.png";
@@ -11,11 +12,12 @@ import './index.css';
 
 const Dashboard = ({ onSignOut }) => {
   const [invoices, setInvoices] = useState([]);
+  const [selectedInvoice, setSelectedInvoice] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://v4ae2rk43ktmsyuwohefx5wr6a0njgsw.lambda-url.us-east-1.on.aws');
+        const response = await axios.get('https://t5epo0n12j.execute-api.us-east-1.amazonaws.com/Stage/invoices');
         setInvoices(response.data.invoices);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -85,9 +87,13 @@ const Dashboard = ({ onSignOut }) => {
     );
   };
 
+  const handleEditClick = (invoice) => {
+    setSelectedInvoice(invoice);
+  };
+
   return (
     <div className="outer-container">
-      <div className="top-row">
+       <div className="top-row">
         <div className="user-info">
         <Avatar className="user-icon" alt="Ahmer" src="/static/images/avatar/1.jpg" />
          <div className="welcomeUser">
@@ -151,10 +157,33 @@ const Dashboard = ({ onSignOut }) => {
       </div>
 
       <div className="transaction-list">
-        <h2>Transaction List</h2>
-        {tabValue === 0 && renderInvoices(filteredInvoices)}
-        {tabValue === 1 && renderInvoices(invoices)}
-      </div>
+  <h2>Transaction List</h2>
+  <ul>
+    {invoices.map((invoice, index) => (
+      <li key={index} className={`status-${invoice.status}`}>
+        <div className="transaction-header">
+          <span className="transaction-name">{invoice.payer_address}</span>
+          <span className="transaction-name">{invoice.payee_address}</span>
+          <span className="transaction-amount">${invoice.amount}</span>
+        </div>
+        <div className="transaction-details">
+          <span className="transaction-date">{formatDate(invoice.creation_date)}</span>
+          <span className="transaction-status">Status: {invoice.status}</span>
+          <span className="transaction-fee">Fee: ${invoice.fee}</span>
+        </div>
+        <div className="transaction-actions">
+          <Button onClick={() => handleEditClick(invoice)}>Edit</Button>
+        </div>
+      </li>
+    ))}
+  </ul>
+</div>
+      {selectedInvoice && (
+        <EditInvoice
+          invoice={selectedInvoice}
+          onClose={() => setSelectedInvoice(null)}
+        />
+      )}
     </div>
   );
 };

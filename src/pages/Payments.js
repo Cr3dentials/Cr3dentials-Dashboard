@@ -9,7 +9,7 @@ const Payments = () => {
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const response = await axios.get('https://uru3ltbv7vn42n4duubofssy4y0pdslh.lambda-url.us-east-1.on.aws/');
+        const response = await axios.get('https://t5epo0n12j.execute-api.us-east-1.amazonaws.com/Stage/payments');
         setPayments(response.data.payments);
         setLoading(false);
       } catch (error) {
@@ -24,7 +24,7 @@ const Payments = () => {
 
   const fetchPaymentStatus = async (paymentId) => {
     try {
-      const response = await axios.get(`https://j2m43iwenuftlg6oksvgc5lsba0wsrcv.lambda-url.us-east-1.on.aws/${paymentId}`);
+      const response = await axios.get(`https://t5epo0n12j.execute-api.us-east-1.amazonaws.com/Stage/payments/${paymentId}`);
       return response.data.status;
     } catch (error) {
       console.error(`Error fetching status for payment ID ${paymentId}:`, error);
