@@ -14,10 +14,9 @@ import CreateUser from './pages/CreateUser';
 import GetUser from './pages/GetUser';
 import PayInvoice from "./pages/PayInvoice"
 import CreateInvoice from './Components/CreateInvoice/CreateInvoice';
-import EditInvoice from './pages/EditInvoice';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const handleSignIn = () => {
     setIsLoggedIn(true);
@@ -52,13 +51,14 @@ function App() {
         <Route
           path="/"
           element={
-            <Carousel
-              slides={slides}
-              isLoggedIn={isLoggedIn}
-            />
+            // <Carousel
+            //   slides={slides}
+            //   isLoggedIn={isLoggedIn}
+            // />
+            <Dashboard />
           }
         />
-        <Route
+        {/* <Route
           path="/dashboard"
           element={
             isLoggedIn ? (
@@ -67,17 +67,15 @@ function App() {
               <Navigate to="/" />
             )
           }
-        />
-         <Route path="/create-account" element={<CreateAccount onSignIn={handleSignIn}/>} />
-         <Route path="/sign-in" element={<SignIn onSignIn={handleSignIn}/>} />
+        /> */}
+         {/* <Route path="/create-account" element={<CreateAccount onSignIn={handleSignIn}/>} /> */}
+         {/* <Route path="/sign-in" element={<SignIn onSignIn={handleSignIn}/>} /> */}
          <Route path="/invoices" element={<Invoices/>} />
          <Route path="/payments" element={<Payments/>} />
          <Route path="/create-user" element={<CreateUser/>} />
          <Route path="/pay-invoice" element={<PayInvoice/>} />
          <Route path="/create-invoice" element={<CreateInvoice/>} />
-         <Route path="/edit-invoice" element={<EditInvoice/>} />
          <Route path="/get-user" element={<GetUser/>} />
-         {/* <Route path="/delete-invoice" element={<CreateInvoice/>} /> */}
       </Routes>
     </Router>
   );

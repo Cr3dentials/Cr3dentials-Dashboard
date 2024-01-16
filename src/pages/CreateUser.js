@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import Alert from '@mui/material/Alert'; 
 import axios from 'axios';
+import './index.css';
 
 const roles = [2, 1, 3];
 
@@ -17,7 +17,6 @@ const CreateUser = () => {
     created_date: getCurrentDate(),
     authentication_token: '',
   });
-  const [alert, setAlert] = useState({ open: false, message: '', severity: '' });
 
   function getCurrentDate() {
     const today = new Date();
@@ -34,8 +33,16 @@ const CreateUser = () => {
     });
   };
 
-  const handleAlertClose = () => {
-    setAlert({ ...alert, open: false });
+  const resetForm = () => {
+    setFormData({
+      username: '',
+      email: '',
+      password: '',
+      phone_number: '',
+      role: '',
+      created_date: getCurrentDate(),
+      authentication_token: '',
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -50,121 +57,101 @@ const CreateUser = () => {
           },
         }
       );
-  
-      setAlert({
-        open: true,
-        message: 'User has been successfully created!',
-        severity: 'success',
-      });
-  
+
+      // Use browser alert
+      alert('User has been successfully created!');
+
       // Clear form data
-      setFormData({
-        username: '',
-        email: '',
-        password: '',
-        phone_number: '',
-        role: '',
-        created_date: getCurrentDate(),
-        authentication_token: '',
-      });
-  
+      resetForm();
+
       console.log('Response:', response.data);
     } catch (error) {
       console.error('Error submitting form data:', error);
-      setAlert({
-        open: true,
-        message: 'Error creating user. Please try again.',
-        severity: 'error',
-      });
+      // Use browser alert
+      alert('Error creating user. Please try again.');
     }
   };
+
   return (
     <>
-      <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: 'auto' }}>
-      <TextField
-        label="Username"
-        name="username"
-        value={formData.username}
-        onChange={handleChange}
-        fullWidth
-        margin="normal"
-        required
-      />
-      <TextField
-        type="email"
-        label="Email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        fullWidth
-        margin="normal"
-        required
-      />
-      <TextField
-        type="password"
-        label="Password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-        fullWidth
-        margin="normal"
-        required
-      />
-      <TextField
-        label="Phone Number"
-        name="phone_number"
-        value={formData.phone_number}
-        onChange={handleChange}
-        fullWidth
-        margin="normal"
-        required
-      />
-      <TextField
-        label="Auth Token"
-        name="authentication_token"
-        value={formData.authentication_token}
-        onChange={handleChange}
-        fullWidth
-        margin="normal"
-      />
-      <TextField
-        select
-        label="Role"
-        name="role"
-        value={formData.role}
-        onChange={handleChange}
-        fullWidth
-        margin="normal"
-        required
-      >
-        {roles.map((role) => (
-          <MenuItem key={role} value={role}>
-            {role}
-          </MenuItem>
-        ))}
-      </TextField>
-      {/* <TextField
-        label="Created Date"
-        name="created_date"
-        value={formData.created_date}
-        fullWidth
-        margin="normal"
-        disabled
-      /> */}
-      <Button type="submit" variant="contained" color="primary" fullWidth>
-        Add User
-      </Button>
-        
-      </form>
-
-      <Alert
-        open={alert.open}
-        onClose={handleAlertClose}
-        severity={alert.severity}
-        sx={{ marginTop: 2 }}
-      >
-        {alert.message}
-      </Alert>
+      <div className="outer-container">
+        <div className='pageHeading'>Create User</div>
+        <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: 'auto' }}>
+          <TextField
+            label="Username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+          type="email"
+          label="Email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          required
+        />
+        <TextField
+          type="password"
+          label="Password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          required
+        />
+        <TextField
+          label="Phone Number"
+          name="phone_number"
+          value={formData.phone_number}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          required
+        />
+        <TextField
+          label="Auth Token"
+          name="authentication_token"
+          value={formData.authentication_token}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          select
+          label="Role"
+          name="role"
+          value={formData.role}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          required
+        >
+          {roles.map((role) => (
+            <MenuItem key={role} value={role}>
+              {role}
+            </MenuItem>
+          ))}
+        </TextField>
+        {/* <TextField
+          label="Created Date"
+          name="created_date"
+          value={formData.created_date}
+          fullWidth
+          margin="normal"
+          disabled
+        /> */}
+          <Button type="submit" variant="contained" color="primary" fullWidth>
+            Add User
+          </Button>
+        </form>
+      </div>
     </>
   );
 };

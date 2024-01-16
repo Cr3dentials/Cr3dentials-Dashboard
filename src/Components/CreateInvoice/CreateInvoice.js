@@ -86,6 +86,7 @@ const CreateInvoice = () => {
 
   return (
     <div className="outer-container">
+      <div className='pageHeading'>Create Invoice</div>
       <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: 'auto' }}>
       <TextField
           label="Payer Address"

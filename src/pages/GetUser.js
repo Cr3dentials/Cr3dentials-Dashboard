@@ -4,11 +4,11 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 import './index.css';
+import AllUsersList from '../Components/AllUsersList';
 
 const UserInfo = () => {
   const [userId, setUserId] = useState('');
   const [userData, setUserData] = useState(null);
-  const [fetchAllUsers, setFetchAllUsers] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -30,96 +30,50 @@ const UserInfo = () => {
     }
   };
 
-  const fetchAllUsersData = async () => {
-    try {
-      const allUsersResponse = await fetchData(
-        'https://t5epo0n12j.execute-api.us-east-1.amazonaws.com/Stage/users/1'
-      );
-      setFetchAllUsers(allUsersResponse);
-    } catch (error) {
-      setFetchAllUsers(null);
-      console.error('Error fetching all users data:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchAllUsersData();
-  }, []); 
-
   const renderUserData = (userData) => {
     return (
       <div>
-        <h2>User Information</h2>
-        {userData && userData.user && userData.user.length > 0 ? (
-          <>
-            <p>
-              <strong>User ID:</strong> {userData.user[0].userid}
-            </p>
-            <p>
-              <strong>Username:</strong> {userData.user[0].username}
-            </p>
-            <p>
-              <strong>Phone Number:</strong> {userData.user[0].phone_number}
-            </p>
-            <p>
-              <strong>Role:</strong> {userData.user[0].role}
-            </p>
-            <p>
-              <strong>Created Date:</strong> {userData.user[0].created_date}
-            </p>
-            <p>
-              <strong>Last Login Date:</strong> {userData.user[0].last_login_date}
-            </p>
-            <p>
-              <strong>Account Status:</strong> {userData.user[0].account_status}
-            </p>
-          </>
-        ) : (
-          userData && <p>No user information available for the specified ID.</p>
-        )}
-      </div>
-    );
-  };
-
-  const renderAllUsersTable = (fetchAllUsers) => {
-    return (
-      <div>
-        <h2>All Users</h2>
-        {fetchAllUsers && fetchAllUsers.users && fetchAllUsers.users.length > 0 ? (
-          fetchAllUsers.users.map((user) => (
-            <div key={user.userid}>
-              <p>
-                <strong>User ID:</strong> {user.userid}
-              </p>
-              <p>
-                <strong>Username:</strong> {user.username}
-              </p>
-              <p>
-                <strong>Phone Number:</strong> {user.phone_number}
-              </p>
-              <p>
-                <strong>Password:</strong> {user.password}
-              </p>
-              <p>
-                <strong>Authentication Token:</strong> {user.authentication_token}
-              </p>
-              <p>
-                <strong>Role:</strong> {user.role}
-              </p>
-              <p>
-                <strong>Account Status:</strong> {user.account_status}
-              </p>
-              <p>
-                <strong>Email:</strong> {user.email}
-              </p>
+      {userData && userData.user && userData.user.length > 0 ? (
+      // <h2>User Information</h2>
+        <ul className="transaction-list m-6">
+          <li className={`status-${userData.user[0].account_status}`}>
+            <div className="transaction-details">
+              <span className="transaction-name">User ID:</span>
+              <span className="transaction-amount">{userData.user[0].userid}</span>
             </div>
-          ))
-        ) : (
-          fetchAllUsers && <p>No user information available.</p>
-        )}
-      </div>
+            <div className="transaction-details">
+              <span className="transaction-name">Username:</span>
+              <span className="transaction-amount">{userData.user[0].username}</span>
+            </div>
+            <div className="transaction-details">
+              <span className="transaction-name">Phone Number:</span>
+              <span className="transaction-amount">{userData.user[0].phone_number}</span>
+            </div>
+            <div className="transaction-details">
+              <span className="transaction-name">Role:</span>
+              <span className="transaction-amount">{userData.user[0].role}</span>
+            </div>
+            <div className="transaction-details">
+              <span className="transaction-name">Created Date:</span>
+              <span className="transaction-amount">{userData.user[0].created_date}</span>
+            </div>
+            <div className="transaction-details">
+              <span className="transaction-name">Last Login Date:</span>
+              <span className="transaction-amount">{userData.user[0].last_login_date}</span>
+            </div>
+            <div className="transaction-details">
+              <span className="transaction-name">Account Status:</span>
+              <span className="transaction-amount">{userData.user[0].account_status}</span>
+            </div>
+          </li>
+        </ul>
+      ) : (
+        userData && <p>No user information available for the specified ID.</p>
+      )}
+    </div>
     );
-  };
+  }; 
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -142,15 +96,15 @@ const UserInfo = () => {
 
   return (
     <div className='outer-container'>
-      <form onSubmit={handleSubmit}>
+      <form className='userInputForm' onSubmit={handleSubmit}>
         <TextField
+        className='userInput'
           type='number'
-          label="User ID"
+          label="Input User ID"
           name="userId"
           value={userId}
           onChange={handleChange}
           margin="normal"
-          fullWidth
           required
         />
         <Button type="submit" variant="contained" color="primary">
@@ -158,14 +112,14 @@ const UserInfo = () => {
         </Button>
       </form>
 
-      {loading && <CircularProgress style={{ margin: '20px' }} />}
+      {loading &&  <CircularProgress style={{ margin: '20px auto', display: 'block' }} />}
       {error && <p>Error: {error}</p>}
 
       {renderUserData(userData)}
 
-      <hr /> {/* Section Divider */}
+      <hr />
 
-      {renderAllUsersTable(fetchAllUsers)}
+      <AllUsersList />
     </div>
   );
 };

@@ -1,200 +1,120 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
-import EditInvoice from './EditInvoice';
-import Icon1 from "../images/dashIcon1.png";
-import Icon2 from "../images/dashIcon2.png";
-import Icon3 from "../images/dashIcon3.png";
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
-import axios from 'axios';
+import Avatar from '@mui/material/Avatar';
 import './index.css';
 
 const Dashboard = ({ onSignOut }) => {
-  const [invoices, setInvoices] = useState([]);
-  const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const transactions = [
+    { name: 'Christopher Barton', amount: 50, date: '2023-03-15', status: 'paid' },
+    { name: 'Christopher Barton', amount: 30, date: '2023-03-18', status: 'active' },
+    { name: 'Christopher Barton', amount: 20, date: '2023-03-22', status: 'unpaid' },
+    { name: 'Christopher Barton', amount: 60, date: '2023-03-25', status: 'active' },
+    { name: 'Christopher Barton', amount: 40, date: '2023-03-28', status: 'paidLate' },
+    { name: 'Christopher Barton', amount: 35, date: '2023-04-01', status: 'paidEarly' },
+  ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https://t5epo0n12j.execute-api.us-east-1.amazonaws.com/Stage/invoices');
-        setInvoices(response.data.invoices);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
-    const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
-    return formattedDate;
-  };
-  
   const [filterStatus, setFilterStatus] = useState('all');
-  const [tabValue, setTabValue] = useState(0);
-  const [signOut, setSignOut] = useState(false);
-
-  const handleSignOut = () => {
-    setSignOut(true);
-    if (onSignOut) {
-      onSignOut();
-    }
-  };
 
   const handleFilterChange = (event) => {
     setFilterStatus(event.target.value);
   };
 
-  const handleChangeTab = (event, newValue) => {
-    setTabValue(newValue);
-  };
-
-
-  const filteredInvoices = invoices.filter(invoice => {
+  const filteredTransactions = transactions.filter(transaction => {
     if (filterStatus === 'all') return true;
     return (
-      invoice.status === filterStatus ||
-      (filterStatus === 'paid' && invoice.status === 'paidEarly') ||
-      (filterStatus === 'paid' && invoice.status === 'paidLate')
+      transaction.status === filterStatus ||
+      (filterStatus === 'paid' && transaction.status === 'paidEarly') ||
+      (filterStatus === 'paid' && transaction.status === 'paidLate')
     );
   });
 
-  const renderInvoices = (invoices) => {
+  const handleSignOut = () => {
+    if (onSignOut) {
+      onSignOut();
+    }
+  };
+
+  const renderTransactions = (transactions) => {
     return (
       <ul>
-        {invoices.map((invoice, index) => (
-          <li key={index} className={`status-${invoice.status}`}>
+        {transactions.map((transaction, index) => (
+          <li key={index} className={`status-${transaction.status}`} id="transactionList">
             <div className="transaction-header">
-              <span className="transaction-name">{invoice.payer_address}</span>
-              <span className="transaction-name">
-              {invoice.payee_address}
-              </span>
-              <span className="transaction-amount">${invoice.amount}</span>
+              <span className="transaction-name">{transaction.name}</span>
+              <span className="transaction-amount">${transaction.amount}</span>
             </div>
             <div className="transaction-details">
-            <span className="transaction-date">{formatDate(invoice.creation_date)}</span>
-              <span className="transaction-status">
-                Status: {invoice.status}
+              <span className="transaction-date">{transaction.date}</span>
+              <span
+                className="transaction-status"
+                style={{
+                  color: getStatusColor(transaction.status),
+                  border: `1px solid ${getStatusColor(transaction.status)}`,
+                  borderRadius: '30px',
+                  backgroundColor: `${getStatusColor(transaction.status)}10`, 
+                  padding: '0px 5px', 
+                  display: 'inline-block',
+                }}
+              >
+                {transaction.status}
               </span>
-              <span className="transaction-fee">Fee: ${invoice.fee}</span>
             </div>
           </li>
         ))}
       </ul>
     );
   };
-
-  const handleEditClick = (invoice) => {
-    setSelectedInvoice(invoice);
+  
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'paid':
+        return '#20C375';
+      case 'active':
+        return '#1677FF';
+      case 'unpaid':
+        return '#C52CEE';
+      case 'paidEarly':
+        return '#FA8C16';
+      case 'paidLate':
+        return '#F5222D';
+      default:
+        return '#1677FF';
+    }
   };
 
   return (
     <div className="outer-container">
-    <div className="top-row">
-    <div className="user-info">
-    <Avatar className="user-icon" alt="Ahmer" src="/static/images/avatar/1.jpg" />
-     <div className="welcomeUser">
-     <span className="welcome-message">Welcome !</span>
-     <span >Hey Ahmer 👋</span>
-     </div>
-    </div>
-    <Button variant="contained" onClick={handleSignOut}>Sign Out</Button>
-    {/* <img src={bellIcon} className="bell-icon" alt='notifications icon' /> */}
-  </div>
+               <div className="top-row">
+        <div className="user-info">
+          <Avatar className="user-icon" alt="Ahmer" src="/static/images/avatar/1.jpg" />
+          <div className="welcomeUser">
+            <span className="welcome-message">Welcome !</span>
+            <span>Hey Ahmer 👋</span>
+          </div>
+        </div>
+        <Button variant="contained" onClick={handleSignOut}>
+          Sign Out
+        </Button>
+      </div>
 
-  <Tabs
-    value={tabValue}
-    onChange={handleChangeTab}
-    centered
-    className="tabs-container"
-  >
-    <Tab label="Get Paid" />
-    <Tab label="Pay Now" />
-  </Tabs>
-
-  <div className="analytics-row">
-    <div className="analytics-box">
-      <div className='iconsContainer'>
-        <img src={Icon1} alt='Invoice Icon' />
+      <div className="filter-dropdown">
+        <select id="statusFilter" value={filterStatus} onChange={handleFilterChange}>
+          <option value="all">All</option>
+          <option value="paid">Paid</option>
+          <option value="unpaid">Unpaid</option>
+          <option value="active">Active</option>
+          <option value="paidLate">Paid Late</option>
+          <option value="paidEarly">Paid Early</option>
+        </select>
       </div>
-      <div>
-        <p style={{ fontSize: '24px' }}>40</p>
-        <h3 style={{ fontSize: '18px' }}>Received Invoices</h3>
-      </div>
-    </div>
-    <div className="analytics-box">
-      <div className='iconsContainer'>
-        <img src={Icon2} alt='Invoice Icon' />
-      </div>
-      <div>
-        <p style={{ fontSize: '24px' }}>236</p>
-        <h3 style={{ fontSize: '18px' }}>Active Invoices</h3>
-      </div>
-    </div>
-    <div className="analytics-box">
-      <div className='iconsContainer'>
-        <img src={Icon3} alt='Invoice Icon' />
-      </div>
-      <div>
-        <p style={{ fontSize: '24px' }}>10</p>
-        <h3 style={{ fontSize: '18px' }}>Overdue Invoices</h3>
-      </div>
-    </div>
-  </div>
-
-  <div className="filter-dropdown">
-    <select id="statusFilter" value={filterStatus} onChange={handleFilterChange}>
-      <option value="all">All</option>
-      <option value="paid">Paid</option>
-      <option value="unpaid">Unpaid</option>
-      <option value="active">Active</option>
-      <option value="paidLate">Paid Late</option>
-      <option value="paidEarly">Paid Early</option>
-    </select>
-  </div>
 
       <div className="transaction-list">
         <h2>Transaction List</h2>
-        <ul>
-          {invoices.map((invoice, index) => (
-            <li key={index} className={`status-${invoice.status}`}>
-              <div className="transaction-header">
-                <span className="transaction-name">{invoice.payer_address}</span>
-                <span className="transaction-name">{invoice.payee_address}</span>
-                <span className="transaction-amount">${invoice.amount}</span>
-              </div>
-              <div className="transaction-details">
-                <span className="transaction-date">{formatDate(invoice.creation_date)}</span>
-                <span className="transaction-status">Status: {invoice.status}</span>
-                <span className="transaction-fee">Fee: ${invoice.fee}</span>
-              </div>
-              <div className="transaction-actions">
-                
-                <Link
-                  to={{
-                    pathname: '/edit-invoice',
-                    state: { invoiceDetails: invoice },
-                  }}
-                >
-                  <Button>Edit</Button>
-                </Link>
-              </div>
-            </li>
-          ))}
-        </ul>
+        {renderTransactions(filteredTransactions)}
+        {renderTransactions(transactions)}
       </div>
-
-      {selectedInvoice && (
-        <EditInvoice
-          invoice={selectedInvoice}
-          onClose={() => setSelectedInvoice(null)}
-        />
-      )}
     </div>
+    
   );
 };
 

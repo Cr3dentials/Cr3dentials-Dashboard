@@ -25,7 +25,14 @@
     margin-bottom: 10px;
     line-height: 30px;
   }
-  
+  .pageHeading{
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px auto;
+    line-height: 30px;
+    text-align: center;
+    text-transform: uppercase;
+  }
   .form-title {
     margin-bottom: 20px;
     font-size: 18px;
@@ -57,6 +64,10 @@
     display: flex;
     justify-content: space-around;
     margin: 15px 0px 5px 0px;
+  }
+  .Invoicecontainer{
+    display: flex;
+    justify-content: space-evenly;
   }
 
   /* DashBoard CSS Starts Here  */
@@ -119,7 +130,7 @@
     border-radius: 50%;
     margin-right: 30px;
   }
-  .transaction-list li {
+  #transactionList {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -181,6 +192,11 @@ text-align: right;
   .filter-dropdown{
     text-align: end;
   }
+  .transaction-actions{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
   
 
  /* Invoice CSS Starts Here   */
@@ -204,4 +220,16 @@ text-align: right;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+ }
+ 
+ /* Get User CSS */
+
+ .userInput{
+  width: 40%;
+ }
+ .userInputForm{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px auto 20px;
  }

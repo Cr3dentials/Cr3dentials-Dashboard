@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Payments = () => {
   const [payments, setPayments] = useState([]);
@@ -49,7 +50,11 @@ const Payments = () => {
   }, [payments]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </div>
+    );
   }
 
   if (error) {
