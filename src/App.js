@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Carousel from './Components/Carousel/Carousel';
 import BottomNav from './Components/BottomNav'; 
 import Dashboard from './pages/Dashboard';
@@ -14,9 +14,11 @@ import CreateUser from './pages/CreateUser';
 import GetUser from './pages/GetUser';
 import PayInvoice from "./pages/PayInvoice"
 import CreateInvoice from './Components/CreateInvoice/CreateInvoice';
+import CreditScore from './pages/CreditScore';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [web3auth, setWeb3auth] = useState(null);
 
   const handleSignIn = () => {
     setIsLoggedIn(true);
@@ -24,6 +26,7 @@ function App() {
 
   const handleSignOut = () => {
     setIsLoggedIn(false);
+    setWeb3auth(null);
   };
 
   const slides = [
@@ -46,36 +49,42 @@ function App() {
 
   return (
     <Router>
-      {isLoggedIn && <BottomNav />}
+      {isLoggedIn ? <BottomNav /> : null}
       <Routes>
         <Route
           path="/"
           element={
-            // <Carousel
-            //   slides={slides}
-            //   isLoggedIn={isLoggedIn}
-            // />
-            <Dashboard />
+            isLoggedIn ? (
+              <Navigate to="/dashboard" />
+            ) : (
+              <Carousel
+                slides={slides}
+                onLogin={handleSignIn}
+                setWeb3auth={setWeb3auth}
+              />
+            )
           }
         />
-        {/* <Route
+        <Route
           path="/dashboard"
           element={
             isLoggedIn ? (
-              <Dashboard onSignOut={handleSignOut} />
+              <>
+                <Dashboard onSignOut={handleSignOut} web3auth={web3auth} />
+                {isLoggedIn && <BottomNav />}
+              </>
             ) : (
               <Navigate to="/" />
             )
           }
-        /> */}
-         {/* <Route path="/create-account" element={<CreateAccount onSignIn={handleSignIn}/>} /> */}
-         {/* <Route path="/sign-in" element={<SignIn onSignIn={handleSignIn}/>} /> */}
-         <Route path="/invoices" element={<Invoices/>} />
-         <Route path="/payments" element={<Payments/>} />
-         <Route path="/create-user" element={<CreateUser/>} />
-         <Route path="/pay-invoice" element={<PayInvoice/>} />
-         <Route path="/create-invoice" element={<CreateInvoice/>} />
-         <Route path="/get-user" element={<GetUser/>} />
+        />
+        <Route path="/invoices" element={<Invoices />} />
+        <Route path="/payments" element={<Payments />} />
+        <Route path="/credit-score" element={<CreditScore />} />
+        <Route path="/create-user" element={<CreateUser />} />
+        <Route path="/pay-invoice" element={<PayInvoice />} />
+        <Route path="/create-invoice" element={<CreateInvoice />} />
+        <Route path="/get-user" element={<GetUser />} />
       </Routes>
     </Router>
   );

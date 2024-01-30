@@ -96,18 +96,17 @@ const UserInfo = () => {
 
   return (
     <div className='outer-container'>
-      <form className='userInputForm' onSubmit={handleSubmit}>
+      <form style={{ maxWidth: '400px', margin: '20px auto' }} onSubmit={handleSubmit}>
         <TextField
         className='userInput'
-          type='number'
           label="Input User ID"
           name="userId"
           value={userId}
           onChange={handleChange}
+          fullWidth
           margin="normal"
-          required
         />
-        <Button type="submit" variant="contained" color="primary">
+        <Button type="submit" variant="contained" color="primary" fullWidth>
           Get User Data
         </Button>
       </form>

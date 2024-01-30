@@ -82,7 +82,19 @@
     align-items: center;
     padding: 20px;
   }
-  
+  .dashSummary{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 20px auto;
+  }
+  .invoice-card{
+    width: 100%;
+    border: 1px solid #ccc;
+    margin: 5px;
+    text-align: center;
+  }
   .user-info {
     display: flex;
     align-items: center;
@@ -136,6 +148,13 @@
     justify-content: space-between;
     align-items: center;
     border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  #userList{
+    border: 1px solid #ccc;
+    max-width: 400px;
     border-radius: 8px;
     padding: 10px;
     margin-bottom: 10px;
@@ -221,15 +240,150 @@ text-align: right;
   justify-content: space-evenly;
   align-items: center;
  }
- 
- /* Get User CSS */
 
- .userInput{
-  width: 40%;
+ /* Credit Score CSS  */
+
+ .credit-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 50px;
  }
- .userInputForm{
+ .credit-inner-main{
+  /* min-height: 600px; */
+  width: 50%;
+  padding: 10px 20px;
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  /* justify-content: space-evenly; */
+ }
+ .css-11xur9t-MuiPaper-root-MuiTableContainer-root{
+  border: none !important;
+  box-shadow: 0px 16px 24px 0px rgba(0, 0, 0, 0.06) !important;  
+  border-radius: 19px !important;
+ }
+ .css-l0h214-MuiResponsiveChart-container{
+  border: none !important;
+  /* box-shadow: 0px 16px 24px 0px rgba(0, 0, 0, 0.06) !important;   */
+  border-radius: 19px !important;
+ }
+ .css-1ygcj2i-MuiTableCell-root{
+  font-size: 1rem !important;
+  color:#C7C7C7 !important;
+  padding: 5px !important;
+ }
+ .credit-title{
+  font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-top: 10px;
+    padding-left: 10px;
+ }
+ .score-container{
+  display: flex;
+    align-items: center;
+    max-width: 700px;
+    box-shadow: 0px 16px 24px 0px rgba(0, 0, 0, 0.06) !important;
+    justify-content: space-around;
+    border-radius: 19px;  
+
+ }
+ .scoreHeadingText{
+  position: absolute;
+  top: 50%;
+  left: 41%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: black;
+ }
+ .scoreTitles{
+  border-left: 2px solid rgba(232, 232, 232, 1);
+  padding: 15px;
+  width: 50%;
+  text-align: right;
+ }
+ .InvoiceStatusText {
+  padding: 0px 15px;
+ }
+ .InvoiceStatusText p {
+  font-size: 20px !important;
+  font-weight: 600;
+ }
+ .InvoiceProgressbar{
+  height: 10px !important;
+  border-radius: 25px;
+  width: 70%;
+  margin-right: 20px;
+  background-color: rgba(241, 241, 241, 1);
+ }
+ .invoices-container{
+  display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+ }
+ .progressContainer{
+  display: flex;
+  align-items: center;
+ }
+ .invoiceCardContainer{
+  display: flex;
+    justify-content: space-between;
+    /* margin: 0px 60px; */
+    width: 100%;
+ }
+ .invoiceCardContainer .css-185gdzj-MuiCardHeader-root, .css-46bh2p-MuiCardContent-root{
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin: 10px auto 20px;
+  /* min-width: 120px !important; */
+  text-align: center !important;
+  /* padding: 20px !important; */
  }
+ .invoiceCardContainer .css-185gdzj-MuiCardHeader-root .css-1ssile9-MuiCardHeader-avatar{
+  margin: 0px !important;
+ }
+ .css-bhp9pd-MuiPaper-root-MuiCard-root{
+  box-shadow: 0px 16px 24px 0px rgba(0, 0, 0, 0.06) !important;
+  width: 100% !important;
+  border-radius: 28px !important;
+  margin: 20px !important;
+
+ }
+ .score-inner{
+  position: relative;
+  height: 300px;
+  width:100%;
+  margin-left: -50px;
+ }
+
+
+ @media screen and (max-width: 768px) {
+  .credit-container {
+    flex-direction: column;
+  }
+  .credit-inner-main{
+    width: 100%;
+    padding: 10px;
+  }
+  .css-l0h214-MuiResponsiveChart-container>svg{
+    position: relative;
+    left: 65px;
+    min-width: 300px;
+    padding: 30px;
+  }
+  .score-inner{
+    width:65%;
+   }
+   .scoreHeadingText{
+    left: 61%;
+   }
+   .css-bhp9pd-MuiPaper-root-MuiCard-root{
+    margin: 5px !important;
+   }
+}

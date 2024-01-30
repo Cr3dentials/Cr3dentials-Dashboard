@@ -3,19 +3,20 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
+
 import './index.css';
 
-const roles = [2, 1, 3];
-
 const CreateUser = () => {
+  const roles = [2, 1, 3];
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    phone_number: '',
-    role: '',
-    created_date: getCurrentDate(),
-    authentication_token: '',
+    username: '', //username we get from web3auth
+      email: '', // the user's email we get from web3auth
+      walletAddress:'', // get the wallet address from web3auth
+      password: 'pass123',
+      phone_number: '9194012233',
+      role: '2',
+      created_date: getCurrentDate(),
+      authentication_token: 'authtokendemo',
   });
 
   function getCurrentDate() {
@@ -40,6 +41,7 @@ const CreateUser = () => {
       password: '',
       phone_number: '',
       role: '',
+      walletAddress:'',
       created_date: getCurrentDate(),
       authentication_token: '',
     });
@@ -47,7 +49,11 @@ const CreateUser = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
+    try {  
+      setFormData({
+        ...formData,
+      });
+  
       const response = await axios.post(
         'https://t5epo0n12j.execute-api.us-east-1.amazonaws.com/Stage/user',
         formData,
@@ -57,17 +63,11 @@ const CreateUser = () => {
           },
         }
       );
-
-      // Use browser alert
       alert('User has been successfully created!');
-
-      // Clear form data
       resetForm();
-
       console.log('Response:', response.data);
     } catch (error) {
       console.error('Error submitting form data:', error);
-      // Use browser alert
       alert('Error creating user. Please try again.');
     }
   };

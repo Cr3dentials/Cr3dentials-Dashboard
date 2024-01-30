@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Pagination from '@mui/material/Pagination';
 import CircularProgress from '@mui/material/CircularProgress';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import "../pages/index.css";
 
 const UsersPerPage = 10;
@@ -63,22 +70,24 @@ const AllUsersList = () => {
         <CircularProgress style={{ margin: '20px auto', display: 'block' }} />
       ) : displayedUsers.length > 0 ? (
         <>
-          <ul className="transaction-list">
-            {displayedUsers.map((user) => (
-              <li key={user.userid} className={`status-${user.account_status}`} id="transactionList">
-                <div className="transaction-header">
-                  <span className="transaction-name">{user.username || 'Username'}</span>
-                  <span className="transaction-name">{user.email || 'Email'}</span>
-                  <span className="transaction-amount">{user.phone_number || 'Phone Number'}</span>
-                </div>
-                <div className="transaction-details">
-                  <span className="transaction-status">{user.role || 'Role'}</span>
-                  <span className="transaction-fee">{user.authentication_token || 'Authentication Token'}</span>
-                  <span className="transaction-fee">{user.password || 'Password'}</span>
-                </div>
-              </li>
-            ))}
-          </ul>
+          {displayedUsers.map((user) => (
+            <Accordion key={user.userid} className={`status-${user.account_status}`} id="userList">
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} style={{ width: "100%" }}>
+                <Typography>
+                  <h3>{user.username || 'N/A'}</h3>
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  <p className='accordDetails'>Email: {user.email || 'N/A'}</p>
+                  <p>Phone Number: {user.phone_number || 'N/A'}</p>
+                  <p>Role: {user.role || 'N/A'}</p>
+                  <p>Authentication Token: {user.authentication_token || 'N/A'}</p>
+                  <p>Password: {user.password || 'N/A'}</p>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))}
           <Pagination
             count={totalPages}
             page={currentPage}
