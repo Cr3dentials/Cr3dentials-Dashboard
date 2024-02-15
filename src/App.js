@@ -15,6 +15,7 @@ import GetUser from './pages/GetUser';
 import PayInvoice from "./pages/PayInvoice"
 import CreateInvoice from './Components/CreateInvoice/CreateInvoice';
 import CreditScore from './pages/CreditScore';
+import TransactionList from './pages/TransactionList';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -85,6 +86,7 @@ function App() {
         <Route path="/pay-invoice" element={<PayInvoice />} />
         <Route path="/create-invoice" element={<CreateInvoice />} />
         <Route path="/get-user" element={<GetUser />} />
+        <Route path="/transaction-list" element={<TransactionList />} />
       </Routes>
     </Router>
   );

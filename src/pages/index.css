@@ -216,6 +216,23 @@ text-align: right;
     width: 100%;
     justify-content: space-between;
   }
+  .modal-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      box-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,0.12);
+      padding:16px;
+      background-color: #fff;
+      text-align: start;
+      border-radius: 20px;
+  }
+  .modal-btn-container{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+  }
   
 
  /* Invoice CSS Starts Here   */
@@ -362,6 +379,76 @@ text-align: right;
   margin-left: -50px;
  }
 
+ /* Transaction CSS Starts Here  */
+
+ .transactionOuter{
+  margin: 10px;
+  margin-bottom: 60px;
+ }
+ .transactionOuterContainer{
+  margin: 15px auto;
+ }
+ .transactionOuterContainer h2{
+  font-size: 30px;
+  font-weight: 600;
+ }
+ .transactionOuterContainer p{
+  font-size: 15px;
+  font-weight: 600;
+  color:rgba(0, 0, 0, 0.5);
+ }
+ .transactionHeaderContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+ }
+ .transactionHeader h2 {
+  color: rgba(16, 24, 40, 1);
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: capitalize;
+ }
+ .transactionHeader p {
+  color: rgba(102, 112, 133, 1);
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: capitalize;
+ }
+.transactionHeaderBtns{
+  display: flex;
+  gap: 10px;
+}
+.transactionListContainer{
+  border: 1px solid rgba(234, 236, 240, 1);
+    border-radius: 5px;
+    /* padding: 5px; */
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12);
+    
+}
+.css-11xur9t-MuiPaper-root-MuiTableContainer-root{
+  border: 1px solid  rgba(234, 236, 240, 1) !important;
+  border-radius: 0px !important;
+  /* background-color: rgba(255, 255, 255, 1); */
+  box-shadow: none !important;
+}
+.css-1oj2twp-MuiPagination-root{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+.activeTableRow{
+  border-radius: 15.39px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 17px;
+  text-transform: capitalize;
+  width: 80%;
+}
 
  @media screen and (max-width: 768px) {
   .credit-container {
@@ -385,5 +472,31 @@ text-align: right;
    }
    .css-bhp9pd-MuiPaper-root-MuiCard-root{
     margin: 5px !important;
+   }
+   .modal-container{
+    width: 280px;
+   }
+   .transactionHeaderContainer{
+    flex-direction: column;
+   }
+   .transactionHeaderBtns{
+    width: 100%;
+    justify-content: space-between;
+   }
+   .css-sghohy-MuiButtonBase-root-MuiButton-root{
+    font-size: 12px !important;
+    min-width: 90px !important;
+    padding: 5px !important;
+   }
+   .transactionHeader{
+    width: 100%;
+    padding: 5px;
+   }
+   .activeTableRow{
+    width: 100% !important;
+   }
+   .css-1ex1afd-MuiTableCell-root{
+    min-width: 120px !important;
+    padding: 5px !important;
    }
 }

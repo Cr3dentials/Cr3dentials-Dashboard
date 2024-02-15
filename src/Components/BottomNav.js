@@ -20,9 +20,9 @@ const BottomNav = () => {
         <BottomNavigationAction label="Score" value="score" icon={<AssessmentIcon />} component={Link} to="/credit-score" />
         <BottomNavigationAction label="Wallet" value="wallet" icon={<AccountBalanceWalletIcon />} component={Link} to="/wallet" />
         <BottomNavigationAction label="Payments" value="Payments" icon={<PaidIcon />} component={Link} to="/payments" />
-        <BottomNavigationAction label="Create User" value="create-user" icon={<PersonAddIcon />} component={Link} to="/create-user" />
-        <BottomNavigationAction label="Get User" value="get-user" icon={<PersonIcon />} component={Link} to="/get-user" />
-        {/* <BottomNavigationAction label="Web3Auth" value="web-auth" icon={<PersonIcon />} component={Link} to="/web-auth" /> */}
+        {/* <BottomNavigationAction label="Create User" value="create-user" icon={<PersonAddIcon />} component={Link} to="/create-user" /> */}
+        {/* <BottomNavigationAction label="Get User" value="get-user" icon={<PersonIcon />} component={Link} to="/get-user" /> */}
+        <BottomNavigationAction label="Transact" value="trans-list" icon={<PersonIcon />} component={Link} to="/transaction-list" />
       </BottomNavigation>
     </Paper>
   );

@@ -49,6 +49,7 @@ function Carousel({slides, onLogin, setWeb3auth}) {
     try {
       const user = await web3auth.getUserInfo();
       setUserData(user);
+      console.log(user , "user data")
       const rpc = new RPC(web3auth.provider);
       const address = await rpc.getAccounts();
       const apiFormData = {
@@ -106,6 +107,9 @@ function Carousel({slides, onLogin, setWeb3auth}) {
           setProvider(web3authInstance.provider);
           // getUserInfo();
           // getAccounts();
+           const user = await web3auth.getUserInfo();
+      setUserData(user);
+      console.log(user , "user data")
         }
   
         if (web3authInstance) {
@@ -251,9 +255,9 @@ function Carousel({slides, onLogin, setWeb3auth}) {
       ))}
     </div>
     <div className="carousel-buttons">
-        <Button className="loginButton" onClick={handleLogin} variant="contained">
-          Connect Wallet
-        </Button>
+        <button className="loginButton" onClick={handleLogin} >
+          Sign In
+        </button>
     </div>
   </div>
   );
