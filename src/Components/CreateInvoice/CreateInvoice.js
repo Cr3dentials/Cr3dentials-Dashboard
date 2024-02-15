@@ -17,6 +17,7 @@ const CreateInvoice = () => {
     status: '1',
     approvals: '1',
     email: 'testemail1@gmail.com',
+    description:''
   });
   const [submissionStatus, setSubmissionStatus] = useState(null);
   const [labelVisibility, setLabelVisibility] = useState({
@@ -73,6 +74,7 @@ const CreateInvoice = () => {
         status: '',
         approvals: '',
         email: '',
+        description:''
       });
       setLabelVisibility({
         creation_date: false,
@@ -89,7 +91,7 @@ const CreateInvoice = () => {
       <div className='pageHeading'>Create Invoice</div>
       <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: 'auto' }}>
       <TextField
-          label="Payer Address"
+          label="Phone Number"
           name="payer_address"
           value={invoiceData.payer_address}
           onChange={handleChange}
@@ -98,9 +100,9 @@ const CreateInvoice = () => {
           required
         />
         <TextField
-          label="Payee Address"
-          name="payee_address"
-          value={invoiceData.payee_address}
+          label="Email"
+          name="email"
+          value={invoiceData.email}
           onChange={handleChange}
           fullWidth
           margin="normal"
@@ -126,18 +128,7 @@ const CreateInvoice = () => {
           margin="normal"
           required
         />
-        <TextField
-          type="date"
-          label={labelVisibility.creation_date ? 'Creation Date' : ''}
-              name="creation_date"
-              value={invoiceData.creation_date}
-              onChange={handleChange}
-              onFocus={() => handleFocus('creation_date')}
-              onBlur={() => handleBlur('creation_date')}
-              fullWidth
-          margin="normal"
-          required
-        />
+  
         <TextField
           type="date"
           label={labelVisibility.due_date ? 'Due Date' : ''}
@@ -150,44 +141,22 @@ const CreateInvoice = () => {
           margin="normal"
           required
         />
-        <TextField
-  select
-  label="Status"
-  name="status"
-  value={invoiceData.status}
-  onChange={handleChange}
-  fullWidth
-  margin="normal"
-  required
->
-  <MenuItem value="1">Paid</MenuItem>
-  <MenuItem value="0">Unpaid</MenuItem>
-</TextField>
 
 <TextField
-  select
-  label="Approvals"
-  name="approvals"
-  value={invoiceData.approvals}
-  onChange={handleChange}
-  fullWidth
-  margin="normal"
-  required
->
-  <MenuItem value="1">Approved</MenuItem>
-  <MenuItem value="0">Not Approved</MenuItem>
-</TextField>
-
-        <TextField
-          type="email"
-          label="Email"
-          name="email"
-          value={invoiceData.email}
+          label="Description"
+          name="description"
+          value={invoiceData.description}
           onChange={handleChange}
           fullWidth
           margin="normal"
           required
         />
+  
+
+
+
+
+       
         <Button type="submit" variant="contained" color="primary" fullWidth>
           Create Invoice
         </Button>
