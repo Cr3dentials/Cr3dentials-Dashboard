@@ -252,7 +252,7 @@ function Carousel({slides, onLogin, setWeb3auth}) {
     </div>
     <div className="carousel-buttons">
         <Button className="loginButton" onClick={handleLogin} variant="contained">
-          Connect Wallet
+          Sign In
         </Button>
     </div>
   </div>
