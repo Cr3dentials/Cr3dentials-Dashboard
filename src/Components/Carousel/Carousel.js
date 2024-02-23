@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Web3Auth } from '@web3auth/modal';
 import { CHAIN_NAMESPACES } from '@web3auth/base';
 import RPC from '../../pages/web3RPC';
-import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
+import Logo from '../../images/Logo.png'
 import axios from 'axios';
 import './Carousel.css';
 
@@ -145,18 +146,9 @@ function Carousel({slides, onLogin, setWeb3auth}) {
       const web3authProvider = await web3auth.connect();
       setProvider(web3authProvider.provider);
   
-      // await getUserInfo();
-      // await getAccounts();
-  
       if (await isConnected()) {
-        // setFormData((prevFormData) => ({
-        //   ...prevFormData,
-        //   username: userData.name,
-        //   email: userData.email,
-        //   wallet_address: walletAddress, 
-        // }));
-        await handleSubmit();
-        onLogin();
+        await handleSubmit('web3auth');
+        onLogin('web3authLogin');
       }
     } catch (error) {
       console.error(error);
@@ -224,6 +216,16 @@ function Carousel({slides, onLogin, setWeb3auth}) {
 
   return (
     <div className="carousel-container">
+    <div className="top-bar">
+      <img src={Logo} alt="Logo" className="logo" />
+      <Link to="/sign-in">
+      <button className="loginButtonTop">
+        Log In
+      </button>
+        </Link>
+      
+    </div>
+
     <div
       className="carousel-track"
       style={{
@@ -237,7 +239,11 @@ function Carousel({slides, onLogin, setWeb3auth}) {
           className="carousel-slide"
           style={{ width: `${100 / slides.length}%` }}
         >
-          <img src={slide.image} alt={`slide-${index}`} className="slide-image" />
+          <img
+            src={slide.image}
+            alt={`slide-${index}`}
+            className="slide-image"
+          />
           <div className="carousel-info">
             <h2 className="carousel-title">{slide.title}</h2>
             <p className="carousel-description">{slide.description}</p>
@@ -255,9 +261,9 @@ function Carousel({slides, onLogin, setWeb3auth}) {
       ))}
     </div>
     <div className="carousel-buttons">
-        <button className="loginButton" onClick={handleLogin} >
-          Sign In
-        </button>
+      <button className="loginButton" onClick={handleLogin}>
+        Get Started
+      </button>
     </div>
   </div>
   );

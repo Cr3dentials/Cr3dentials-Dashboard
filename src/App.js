@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Carousel from './Components/Carousel/Carousel';
 import BottomNav from './Components/BottomNav'; 
 import Dashboard from './pages/Dashboard';
-import CreateAccount from './pages/CreateAccount';
+// import CreateAccount from './pages/CreateAccount';
 import Invoices from './pages/Invoices';
 import Payments from './pages/Payments';
 import SignIn from "./pages/SignIn";
@@ -56,7 +56,7 @@ function App() {
           path="/"
           element={
             isLoggedIn ? (
-              <Navigate to="/dashboard" />
+              <Navigate to="/credit-score" />
             ) : (
               <Carousel
                 slides={slides}
@@ -79,14 +79,79 @@ function App() {
             )
           }
         />
-        <Route path="/invoices" element={<Invoices />} />
-        <Route path="/payments" element={<Payments />} />
-        <Route path="/credit-score" element={<CreditScore />} />
-        <Route path="/create-user" element={<CreateUser />} />
-        <Route path="/pay-invoice" element={<PayInvoice />} />
-        <Route path="/create-invoice" element={<CreateInvoice />} />
-        <Route path="/get-user" element={<GetUser />} />
-        <Route path="/transaction-list" element={<TransactionList />} />
+                <Route
+          path="/invoices"
+          element={
+            <>
+              <Invoices />
+              <BottomNav />
+            </>
+          }
+        />
+        <Route
+          path="/payments"
+          element={
+            <>
+              <Payments />
+              <BottomNav />
+            </>
+          }
+        />
+        <Route
+          path="/credit-score"
+          element={
+            <>
+              <CreditScore />
+              <BottomNav />
+            </>
+          }
+        />
+        <Route
+          path="/create-user"
+          element={
+            <>
+              <CreateUser />
+              <BottomNav />
+            </>
+          }
+        />
+        <Route
+          path="/pay-invoice"
+          element={
+            <>
+              <PayInvoice />
+              <BottomNav />
+            </>
+          }
+        />
+        <Route
+          path="/create-invoice"
+          element={
+            <>
+              <CreateInvoice />
+              <BottomNav />
+            </>
+          }
+        />
+        <Route
+          path="/get-user"
+          element={
+            <>
+              <GetUser />
+              <BottomNav />
+            </>
+          }
+        />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route
+          path="/transaction-list"
+          element={
+            <>
+              <TransactionList />
+              <BottomNav />
+            </>
+          }
+        />
       </Routes>
     </Router>
   );

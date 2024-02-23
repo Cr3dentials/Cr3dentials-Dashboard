@@ -19,6 +19,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Pagination from '@mui/material/Pagination';
+import { Link } from 'react-router-dom';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 const TransactionList = () => {
@@ -169,9 +170,11 @@ const TransactionList = () => {
             <Button variant="outlined" startIcon={<ImportExportIcon />}>
               Export
             </Button>
+            <Link to="/create-invoice">
             <Button variant="contained" color="primary" startIcon={<AddIcon />}>
               Add New
             </Button>
+            </Link>
           </div>
         </div>
         <TableContainer component={Paper}>
