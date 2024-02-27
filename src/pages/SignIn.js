@@ -12,16 +12,15 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import './index.css';
 
-const SignIn = () => {
+const SignIn = ({ onSignIn }) => {
   const [showPassword, setShowPassword] = useState(false);
   // const [signIn, setSignIn] = useState(false);
 
-  // const handleSignIn = () => {
-  //   setSignIn(true);
-  //   if (onSignIn) {
-  //     onSignIn('regularLogin');
-  //   }
-  // };
+  const handleLogin = () => {
+    if (onSignIn) {
+      onSignIn();
+    }
+  };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -56,7 +55,7 @@ const SignIn = () => {
           />
         </FormControl>
         <Link to="/transaction-list">
-        <Button className="form-buttons">
+        <Button className="form-buttons" onClick={handleLogin}>
           Login
         </Button>
         </Link>

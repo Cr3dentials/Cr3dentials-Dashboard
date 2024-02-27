@@ -50,14 +50,13 @@ function Carousel({slides, onLogin, setWeb3auth}) {
     try {
       const user = await web3auth.getUserInfo();
       setUserData(user);
-      console.log(user , "user data")
       const rpc = new RPC(web3auth.provider);
       const address = await rpc.getAccounts();
       const apiFormData = {
         username : user.name,
         email : user.email,
         wallet_address : address,
-        password: 'naikmir',
+        password: 'password',
         phone_number: '9194012233',
         role: '2',
         created_date: getCurrentDate(),
@@ -74,11 +73,9 @@ function Carousel({slides, onLogin, setWeb3auth}) {
           },
         }
       );      
-      console.log('Response after api:', response);
       // resetForm();
     } catch (error) {
       console.error('Error submitting form data:', error);
-      alert('Error creating user. Please try again.');
     }
   };
   
@@ -110,7 +107,6 @@ function Carousel({slides, onLogin, setWeb3auth}) {
           // getAccounts();
            const user = await web3auth.getUserInfo();
       setUserData(user);
-      console.log(user , "user data")
         }
   
         if (web3authInstance) {
