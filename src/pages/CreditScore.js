@@ -5,12 +5,14 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
+import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box';
 import './index.css';
 
-const CreditScore = () => {
+const CreditScore = ({ onSignOut }) => {
+
   const paymentHistory = [
     { receiver: 'Tesco Market', type: 'Shopping', date: '2023-05-15', amount: 50 },
     { receiver: 'John Doe', type: 'Food', date: '2023-05-12', amount: 30 },
@@ -52,11 +54,24 @@ const CreditScore = () => {
     { status: 'Unpaid', percentage: 25 },
   ];
   
+  const handleSignOut = () => {
+    onSignOut();
+  };
 
   return (
+    <>
+    {/* <div className="credit-header-container">
+        <div>
+        <h2 className="credit-title">Credit Score</h2>
+        </div>
+        <div>
+        <Button variant="contained" onClick={handleSignOut}>
+          Sign Out
+        </Button>
+        </div>
+       </div> */}
     <section className="credit-container">
       <div className='credit-inner-main'>
-        <h2 className="credit-title">Credit Score</h2>
         <div className='score-container'>
           <div className="score-inner" >
             <PieChart
@@ -184,6 +199,7 @@ const CreditScore = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

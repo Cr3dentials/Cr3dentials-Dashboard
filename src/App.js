@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Carousel from './Components/Carousel/Carousel';
 import BottomNav from './Components/BottomNav'; 
-import Dashboard from './pages/Dashboard';
+// import Dashboard from './pages/Dashboard';
 import Invoices from './pages/Invoices';
 import Payments from './pages/Payments';
 import SignIn from "./pages/SignIn";
@@ -15,10 +15,12 @@ import TransactionList from './pages/TransactionList';
 import slider1 from "./images/slider1.png";
 import slider2 from "./images/slider2.png";
 import slider3 from "./images/slider3.png";
+import Setting from './pages/Setting';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [web3auth, setWeb3auth] = useState(null);
+  const [userType, setUserType] = useState('user');
 
   const handleSignIn = () => {
     setIsLoggedIn(true);
@@ -27,6 +29,7 @@ function App() {
   const handleSignOut = () => {
     setIsLoggedIn(false);
     setWeb3auth(null);
+    setUserType('user');
   };
 
   const slides = [
@@ -49,7 +52,7 @@ function App() {
 
   return (
     <Router>
-      {isLoggedIn && <BottomNav />}
+      {isLoggedIn && <BottomNav userType={userType} />}
 
       <Routes>
         <Route
@@ -58,22 +61,25 @@ function App() {
             isLoggedIn ? (
               <Navigate to="/credit-score" />
             ) : (
-              <Carousel
-                slides={slides}
-                onLogin={handleSignIn}
-                setWeb3auth={setWeb3auth}
-              />
+              <>
+                <Carousel
+                  slides={slides}
+                  onLogin={handleSignIn}
+                  setWeb3auth={setWeb3auth}
+                />
+                {isLoggedIn && <BottomNav userType={userType} />}
+              </>
             )
           }
         />
 
         <Route
-          path="/dashboard"
+          path="/credit-score"
           element={
             isLoggedIn ? (
               <>
-                <Dashboard onSignOut={handleSignOut} web3auth={web3auth} />
-                {isLoggedIn && <BottomNav />}
+                <CreditScore onSignOut={handleSignOut} />
+                {isLoggedIn && <BottomNav userType={userType} />}
               </>
             ) : (
               <Navigate to="/" />
@@ -81,15 +87,21 @@ function App() {
           }
         />
 
+
         <Route path="/invoices" element={<Invoices />} />
         <Route path="/payments" element={<Payments />} />
-        <Route path="/credit-score" element={<CreditScore />} />
+        <Route path="/credit-score" element={<CreditScore onSignOut={handleSignOut}/>} />
         <Route path="/create-user" element={<CreateUser />} />
         <Route path="/pay-invoice" element={<PayInvoice />} />
         <Route path="/create-invoice" element={<CreateInvoice />} />
         <Route path="/get-user" element={<GetUser />} />
-        <Route path="/transaction-list" element={<TransactionList />} />
-        <Route path="/sign-in" element={<SignIn onSignIn={handleSignIn}/>} />
+        {/* <Dashboard onSignOut={handleSignOut} web3auth={web3auth} /> */}
+        <Route path="/settings" element={<Setting onSignOut={handleSignOut} web3auth={web3auth}/>} />
+        <Route
+          path="/transaction-list"
+          element={<TransactionList setUserType={setUserType} />}
+        />
+        <Route path="/sign-in" element={<SignIn onSignIn={handleSignIn} setUserType={setUserType}/>} />
       </Routes>
     </Router>
   );

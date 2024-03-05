@@ -260,6 +260,11 @@ text-align: right;
 
  /* Credit Score CSS  */
 
+ .credit-header-container{
+  display: flex;
+    justify-content: space-between;
+    padding: 15px;
+ }
  .credit-container {
     display: flex;
     justify-content: space-evenly;

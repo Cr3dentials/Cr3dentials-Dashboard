@@ -12,13 +12,16 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import './index.css';
 
-const SignIn = ({ onSignIn }) => {
+const SignIn = ({ onSignIn, setUserType }) => {
   const [showPassword, setShowPassword] = useState(false);
-  // const [signIn, setSignIn] = useState(false);
+  
 
   const handleLogin = () => {
+
+    const businessSignIn = true;
     if (onSignIn) {
       onSignIn();
+      setUserType(businessSignIn ? 'business' : 'user');
     }
   };
 

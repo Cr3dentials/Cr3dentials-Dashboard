@@ -22,7 +22,7 @@ import Pagination from '@mui/material/Pagination';
 import { Link } from 'react-router-dom';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
-const TransactionList = () => {
+const TransactionList = ({ onSignOut, web3auth }) => {
   const [data, setData] = useState([
     { id: 1, name: 'John Doe', email: 'john.doe@example.com', phone: '123-456-7890', description: 'Lorem ipsum', amount: 50, status: 'active' },
     { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com', phone: '987-654-3210', description: 'Dolor sit amet', amount: 30, status: 'inactive' },
@@ -37,7 +37,7 @@ const TransactionList = () => {
     { id: 11, name: 'John Smith', email: 'john.smith@example.com', phone: '111-222-3333', description: 'Another user', amount: 40, status: 'active' },
     { id: 12, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '444-555-6666', description: 'Yet another user', amount: 25, status: 'inactive' },
   ]);
-
+  const [provider, setProvider] = useState(null);
   const [orderBy, setOrderBy] = useState('name');
   const [order, setOrder] = useState('asc');
   const [selectedItems, setSelectedItems] = useState([]);
@@ -65,6 +65,22 @@ const TransactionList = () => {
 
     return sortedData;
   };
+
+  const handleSignOut = async () => {
+    try {
+      if (!web3auth) {
+        console.log('web3auth not initialized yet');
+        return;
+      }
+  
+      const web3authProvider = await web3auth.logout();
+      setProvider(web3authProvider);
+      onSignOut();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
 
   const handleCheckboxChange = (id) => {
     const selectedIndex = selectedItems.indexOf(id);
@@ -106,12 +122,10 @@ const TransactionList = () => {
   };
 
   const handleEdit = () => {
-    // Add your edit logic here
     closeMenu();
   };
 
   const handleDelete = () => {
-    // Add your delete logic here
     closeMenu();
   };
 
@@ -123,6 +137,8 @@ const TransactionList = () => {
     const statusStyle = {
       backgroundColor: status === 'active' ? 'rgba(236, 253, 243, 1)' : 'rgba(242, 244, 247, 1)',
     };
+
+   
   
     return (
       <TableCell>
@@ -136,6 +152,16 @@ const TransactionList = () => {
 
   return (
     <div className='transactionOuter'>
+       {/* <div className="credit-header-container">
+        <div>
+        <h2 className="credit-title">Transaction List</h2>
+        </div>
+        <div>
+        <Button variant="contained" onClick={handleSignOut}>
+          Sign Out
+        </Button>
+        </div>
+       </div> */}
       <div className='transactionOuterContainer'>
         <h2>Transaction List</h2>
         <p>View All Your Transactions Here</p>
