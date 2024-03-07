@@ -8,12 +8,13 @@ const Setting = ({ onSignOut, web3auth }) => {
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
+    onSignOut();
+    navigate('/', { replace: true });
     try {
       if (!web3auth) {
         console.log('web3auth not initialized yet');
         return;
       }
-
       const web3authProvider = await web3auth.logout();
       setProvider(web3authProvider);
       onSignOut();
